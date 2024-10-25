@@ -120,7 +120,7 @@ export async function setRepo(inps: Inputs, remoteURL: string, workDir: string):
         const keepFiles = inps.KeepTargetFiles.split(',')
           .map(x => x.trim())
           .filter(x => x.length > 0)
-          .map(x => `':(exclude)${x}'`);
+          .map(x => `:(exclude)${x}`);
         await exec.exec('git', ['rm', '-r', '--ignore-unmatch', '--', '*', ...keepFiles]);
       }
 
