@@ -46,6 +46,7 @@ function getInputsLog(authMethod: string, inps: Inputs): string {
 [INFO] ExternalRepository: ${inps.ExternalRepository}
 [INFO] AllowEmptyCommit: ${inps.AllowEmptyCommit}
 [INFO] KeepFiles: ${inps.KeepFiles}
+[INFO] KeepTargetFiles: ${inps.KeepTargetFiles}
 [INFO] ForceOrphan: ${inps.ForceOrphan}
 [INFO] UserName: ${inps.UserName}
 [INFO] UserEmail: ${inps.UserEmail}
@@ -115,6 +116,7 @@ describe('getInputs()', () => {
     expect(inps.ExternalRepository).toMatch('');
     expect(inps.AllowEmptyCommit).toBe(false);
     expect(inps.KeepFiles).toBe(false);
+    expect(inps.KeepTargetFiles).toBe('');
     expect(inps.ForceOrphan).toBe(false);
     expect(inps.UserName).toMatch('');
     expect(inps.UserEmail).toMatch('');
@@ -137,6 +139,7 @@ describe('getInputs()', () => {
     process.env['INPUT_EXTERNAL_REPOSITORY'] = 'user/repo';
     process.env['INPUT_ALLOW_EMPTY_COMMIT'] = 'true';
     process.env['INPUT_KEEP_FILES'] = 'true';
+    process.env['INPUT_KEEP_TARGET_FILES'] = 'branch,env';
     process.env['INPUT_FORCE_ORPHAN'] = 'true';
     process.env['INPUT_USER_NAME'] = 'username';
     process.env['INPUT_USER_EMAIL'] = 'github@github.com';
@@ -159,6 +162,7 @@ describe('getInputs()', () => {
     expect(inps.ExternalRepository).toMatch('user/repo');
     expect(inps.AllowEmptyCommit).toBe(true);
     expect(inps.KeepFiles).toBe(true);
+    expect(inps.KeepTargetFiles).toBe('branch,env');
     expect(inps.ForceOrphan).toBe(true);
     expect(inps.UserName).toMatch('username');
     expect(inps.UserEmail).toMatch('github@github.com');

@@ -117,7 +117,11 @@ export async function setRepo(inps: Inputs, remoteURL: string, workDir: string):
         core.info(`[INFO] clean up ${destDir}`);
         core.info(`[INFO] chdir ${destDir}`);
         process.chdir(destDir);
-        await exec.exec('git', ['rm', '-r', '--ignore-unmatch', '*']);
+        const keepFiles = inps.KeepTargetFiles.split(',')
+          .map(x => x.trim())
+          .filter(x => x.length > 0)
+          .map(x => `:!${x}`);
+        await exec.exec('git', ['rm', '-r', '--ignore-unmatch', '--', '*', ...keepFiles]);
       }
 
       core.info(`[INFO] chdir ${workDir}`);
