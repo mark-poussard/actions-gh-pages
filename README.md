@@ -1,3 +1,7 @@
+This is a fork of https://github.com/peaceiris/actions-gh-pages.git which adds the `keep_target_files` parameter.
+
+This parameter allows defining a set of folders or files on the destination branch and sub-folder that will not be removed on deployment cleanup. This was originally built to allow multiple deployments to co-exist on the same branch.
+
 <h2 align="center">
 GitHub Pages Action
 </h2>
@@ -101,6 +105,7 @@ Note that the `GITHUB_TOKEN` that is created by the runner might not inherently 
   - [⭐️ Enable Built-in Jekyll `enable_jekyll`](#%EF%B8%8F-enable-built-in-jekyll-enable_jekyll)
   - [⭐️ Allow empty commits `allow_empty_commit`](#%EF%B8%8F-allow-empty-commits-allow_empty_commit)
   - [⭐️ Keeping existing files `keep_files`](#%EF%B8%8F-keeping-existing-files-keep_files)
+  - [⭐️ Keeping target files `keep_target_files`](#%EF%B8%8F-keeping-target-files-keep_target_files)
   - [⭐️ Deploy to external repository `external_repository`](#%EF%B8%8F-deploy-to-external-repository-external_repository)
   - [⭐️ Force orphan `force_orphan`](#%EF%B8%8F-force-orphan-force_orphan)
   - [⭐️ Set Git username and email](#%EF%B8%8F-set-git-username-and-email)
@@ -386,6 +391,22 @@ For example:
 
 With the v3, this option does not support working with the force_orphan option. The next major release (version 4) will support this.
 See [the issue #455](https://github.com/peaceiris/actions-gh-pages/issues/455)
+
+
+### ⭐️ Keeping target files `keep_target_files`
+
+By default, existing files in the publish branch (or only in `destination_dir` if given) will be removed. If you want the action to add new files but leave target existing ones untouched, list these files or folders using the optional parameter `keep_target_files` (seperated by commas `,`).
+
+For example:
+
+```yaml
+- name: Deploy
+  uses: peaceiris/actions-gh-pages@v4
+  with:
+    github_token: ${{ secrets.GITHUB_TOKEN }}
+    publish_dir: ./public
+    keep_target_files: env, branch
+```
 
 ### ⭐️ Deploy to external repository `external_repository`
 
